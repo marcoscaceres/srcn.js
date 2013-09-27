@@ -5,29 +5,36 @@
 <script src="srcn.js"></script>
 
 <body>
+	<h1>Test 1</h1>
+	<img src="default.jpg">
+	
+	<h1>Test 2</h1>
 	<img src1="(max-width: 400px) pic-small.jpg"
 	     src2="(max-width: 1000px) pic-medium.jpg"
 	     src="pic-large.jpg"
 	     alt="Obama talking to a soldier in hospital scrubs.">
-
+	
+	<h1>Test 3</h1>
 	<img src1="pic.png, picHigh.png 2x, picLow.png .5x">
 
+	<h1>Test 4</h1>
 	<img src1="100 30em 400 70em 50%;
 	         pic50.png 50, pic100.png 100, pic200.png 200,
 	         pic400.png 400, pic800.png 800, pic1600.png 1600,
 	         pic3200.png 3200">
-
+	
+	<h1>Test 5</h1>
 	<img src1="(max-width: 30em) pic50.png .5x, pic100.png 1x, pic200.png 2x, pic400.png 4x"
 	     src2="(max-width: 70em) pic200.png .5x, pic400.png 1x, pic800.png 2x, pic1600.png 4x"
 	     src3="pic400.png .5x, pic800.png 1x, pic1600.png 2x, pic3200.png 4x">
 
-
+	<h1>Test 6</h1>
 	<img src1="100%; pic1.png 160, pic2.png 320, pic3.png 640,
 	                 pic4.png 1280, pic5.png 2560">
 
 	<script>
 	for (var all = document.getElementsByTagName('img'), index = 0, length = all.length; index < length; ++index) {
-		getImageCandidates(all[index]);
+		console.log(getImageCandidates(all[index]));
 	}
 	</script>
 </body>

@@ -1,5 +1,10 @@
-(function (global) {
+(function ProcessingModel (global) {
     'use strict';
+
+    // Let candidates be the result of obtaining the image candidates from the element.
+    
+    //If candidates is empty, abort this algorithm. 
+
     function obtainCandidates(element){
         var candiateAttrs = findCandidates(element.attributes);
         
@@ -10,7 +15,7 @@
                 startsWithSrc = /^src/i,
                 is1To10 = /[1-9]/,
                 isDigits = /^\d+$/,
-                matchesMediaQuery = /^(?:\([^\)]*\)\s*(?:and)?\s*)+/;
+                mqRegex = /^(?:\([^\)]*\)\s*(?:and)?\s*)+/;
 
             for (var i = 0, name; i < attrs.length; i++) {
                 name = attrs[i].name;
@@ -64,29 +69,36 @@
         candiateAttrs.sort(sortByIndex);
 
         //For each candidate attribute:
-        for (var i = 0, candidateAttr; i < candiateAttrs.length; i++) {
-            candidateAttr = candiateAttrs[i];
+        for (var i = 0, value = "", query, matchedQuery, winningValue; i < candiateAttrs.length; i++) {
+            value = candiateAttrs[i].value;
+
             //If the attribute’s value contains a media query, evaluate that query.
-            if(containsMediaQuery(candidateAttr.value)){
-                window.matcheMedia()
-            } 
-            //If it returns true, let winning value be the value of this attribute 
-            //following the media query and abort this sub-algorithm. 
-            //Otherwise, if it returns false, abort this sub-algorithm.
-            //Otherwise, let winning value be this attribute’s value and abort this sub-algorithm. 
-        };
-
-        function containsMediaQuery(value){
-
-            
-            return 
+            if(mqRegex.test(value)){
+                query = value.match(mqRegex)[0];
+                matchedQuery = window.matchMedia(query);
+                
+                if(matchedQuery.matches){
+                    //If it returns true, let winning value be the value of this attribute
+                    //following the media query and abort this sub-algorithm. 
+                    winningValue = value.substring(value.lastIndexOf(query) + query.length, value.length);
+                    break;
+                }else{
+                    //Otherwise, if it returns false, abort this sub-algorithm.
+                    break;
+                }
+            }
+            //Otherwise, let winning value be this attribute’s value and abort this sub-algorithm.
+            winningValue = value;
         }
 
-        //If there is no winning value, return the result of obtaining a candidate 
-        //from src from the element and abort this algorithm.
-        
+        if(winningValue === undefined){
+            //If there is no winning value, return the result of obtaining a candidate 
+            //from src from the element and abort this algorithm.
+            return obtainCandidateFromSrc(element);
+        }
+
         //Let image candidates be an initially empty list.
-        var ImageCandidates = []; 
+        var imageCandidates = [];
         
         //If the winning value conforms to the <x-based-urls> production, 
         //then for each set of values between commas:
@@ -105,18 +117,18 @@
         //the <size-based-urls> production.
         //Divide viewport data into adjacent pairs of values, and a final lone value.
 
-        For each pair of values in viewport data:
-            Let candidate viewport width be the result of intepreting the second value as a <length>, using the same rules as a <length> in a max-width media feature.
-            If the viewport’s width is less than or equal to candidate viewport width, then:
+        //For each pair of values in viewport data:
+            //Let candidate viewport width be the result of intepreting the second value as a <length>, using the same rules as a <length> in a max-width media feature.
+            //If the viewport’s width is less than or equal to candidate viewport width, then:
 
-                If the first value is a <number>, let winning image width be a length equal to that number of pixels.
-                Otherwise, the first value is a <percentage>. Let winning image width be a length equal to the given percentage of the viewport’s width. 
+                //If the first value is a <number>, let winning image width be a length equal to that number of pixels.
+                //Otherwise, the first value is a <percentage>. Let winning image width be a length equal to the given percentage of the viewport’s width. 
 
-            Abort this sub-algorithm. 
-        For each set of values between commas of unprocessed candidates:
-            Let candidate be an image candidate with its url being the <url> from the current set of values.
-            Let candidate’s resolution be the result of dividing the <integer> from the current set of values by the winning image width, as an x unit.
-            Append candidate to image candidates. 
+            //Abort this sub-algorithm. 
+        //For each set of values between commas of unprocessed candidates:
+            //Let candidate be an image candidate with its url being the <url> from the current set of values.
+            //Let candidate’s resolution be the result of dividing the <integer> from the current set of values by the winning image width, as an x unit.
+            //Append candidate to image candidates. 
 
         //Return image candidates.
         return candidates;
@@ -127,7 +139,7 @@
                 imgCandidate;
             //If the element has a src attribute, return a list consisting of a single image candidate, 
             //where that candidate’s url is the value of the src attribute and its resolution is 1x.
-            elem.hasAttribute("src"){
+            if(elem.hasAttribute("src")){
                 imgCandidate = new ImageCandidate(elem.getAttribute("src"),"1x");
                 candidates.push(imgCandidate);
             }
@@ -140,4 +152,8 @@
             Object.defineProperty(this, "resolution", {get: function(){return resolution}});
         }
     }
-}(this))
+    Object.defineProperty(global, "getImageCandiates", {value: function(element){
+        return obtainCandidates(element);
+    }});
+}(this));
+
