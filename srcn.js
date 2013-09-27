@@ -1,9 +1,22 @@
 (function ProcessingModel (global) {
     'use strict';
 
-    // Let candidates be the result of obtaining the image candidates from the element.
+    var startsWithSrc = /^src/i,
+        is1To10 = /[1-9]/,
+        isDigits = /^\d+$/,
+        mqRegex = /^(?:\([^\)]*\)\s*(?:and)?\s*)+/;
     
-    //If candidates is empty, abort this algorithm. 
+    window.addEventListener("DOMContentLoaded", processImgElements);
+
+
+    function processImgElements(){
+        var imgs = global.document.querySelectorAll('img');
+        Array.prototype.forEach.call(imgs, function(elem){
+            console.log("finding candigates for:", elem);
+            console.log(obtainCandidates(elem));
+        });
+    }
+
 
     function obtainCandidates(element){
         var candiateAttrs = findCandidates(element.attributes);
@@ -11,11 +24,7 @@
         //Let candidate attributes be the list of attributes on 
         //the element who satisfy the following conditions:
         function findCandidates(attrs){
-            var matches = [],
-                startsWithSrc = /^src/i,
-                is1To10 = /[1-9]/,
-                isDigits = /^\d+$/,
-                mqRegex = /^(?:\([^\)]*\)\s*(?:and)?\s*)+/;
+            var matches = [];
 
             for (var i = 0, name; i < attrs.length; i++) {
                 name = attrs[i].name;
@@ -44,6 +53,11 @@
             return matches;
         }
 
+        function isValidSrcn(){
+            console.log("isValidSrcn() - NOT IMPLEMENTED YET");
+            return true;
+        }
+
         //If candidate attributes is empty, return the result of obtaining 
         //a candidate from src from the element and abort this algorithm.
         if(candiateAttrs.length === 0){
@@ -69,7 +83,7 @@
         candiateAttrs.sort(sortByIndex);
 
         //For each candidate attribute:
-        for (var i = 0, value = "", query, matchedQuery, winningValue; i < candiateAttrs.length; i++) {
+        for (var i = 0, value = "", query="", matchedQuery, winningValue; i < candiateAttrs.length; i++) {
             value = candiateAttrs[i].value;
 
             //If the attribute’s value contains a media query, evaluate that query.
@@ -152,7 +166,7 @@
             Object.defineProperty(this, "resolution", {get: function(){return resolution}});
         }
     }
-    Object.defineProperty(global, "getImageCandiates", {value: function(element){
+    Object.defineProperty(global, "getImageCandidates", {value: function(element){
         return obtainCandidates(element);
     }});
 }(this));
