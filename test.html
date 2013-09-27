@@ -5,21 +5,48 @@
 <script src="srcn.js"></script>
 
 <body>
-	<img>
-	<img alt="The attribute name is at least 4 characters long">
-	<img width="1000" alt="The attribute name is at least 4 characters long">
-	<img lowsrc="lowsrc.jpg">
-	<img src>
-	<img src="">
-	<img src="pass.jpg" alt="case-insensitive match for src">
-	<img SRC="pass.jpg" alt="case-insensitive match for src">
-	<img SrC="pass.jpg" alt="case-insensitive match for src">
-	<img src0="fail.jpg" alt="cannot start with 0">
-	<img src010="fail.jpg" alt="cannot start with 0">
-	<img src1a="fail.jpg" alt="The remaining characters of the attribute name must be digits (0-9)">
-	<img src12a4="fail.jpg" alt="The remaining characters of the attribute name must be digits (0-9)">
-	<img srca124="fail.jpg" alt="The remaining characters of the attribute name must be digits (0-9)">
+	<div>
+		<p>The attribute name is at least 4 characters long.</p>
+		<img>
+		<img alt="">
+		<img lowsrc="fail.jpg">
+	</div>
+	<div>
+		<p>The first three characters of the attribute name are an ASCII case-insensitive match for "src".</p>
+		<img src>
+		<img src="">
+		<img src="pass.jpg">
+		<img SRC="pass.jpg">
+		<img SrC="pass.jpg">
+		<img src1="pass.jpg">
+		<img SRC2="pass.jpg">
+		<img SrC3="pass.jpg">
+	</div>
 
+	<div>
+		<p>//The fourth character of the attribute name is a non-zero digit (1-9).</p>
+		<img src0="fail.jpg">
+		<img src01="fail.jpg">
+		<img src1="pass.jpg">
+		<img src9="pass.jpg">
+	</div>
+
+	<div>
+		<p>The remaining characters of the attribute name must be digits (0-9).
+		<img src1a="fail.jpg">
+		<img src12a4="fail.jpg">
+		<img srca124="fail.jpg">
+		<img src10="pass.jpg">
+		<img src124="pass.jpg">
+		<img src502023402043024032040234042304232323423241231234231314213243241123="pass.jpg">
+		<img src50202340204302403204023404230423232342324123123423131421324324fail="fail.jpg">
+	</div>
+
+	<div>
+		<p>The attribute value matches the &lt;srcn-attribute&gt; production.</p>
+		<img src1="fail: fail) fail.jpg">
+		<img src1="(fail: fail) and $#@ fail.jpg">
+	</div>
 
 	<img src1="(max-width: 400px) pic-small.jpg"
 	     src2="(max-width: 1000px) pic-medium.jpg"
