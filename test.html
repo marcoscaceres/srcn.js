@@ -5,10 +5,22 @@
 <script src="srcn.js"></script>
 
 <body>
-	<h1>Test 1</h1>
-	<img src="default.jpg">
-	
-	<h1>Test 2</h1>
+	<img>
+	<img alt="The attribute name is at least 4 characters long">
+	<img width="1000" alt="The attribute name is at least 4 characters long">
+	<img lowsrc="lowsrc.jpg">
+	<img src>
+	<img src="">
+	<img src="pass.jpg" alt="case-insensitive match for src">
+	<img SRC="pass.jpg" alt="case-insensitive match for src">
+	<img SrC="pass.jpg" alt="case-insensitive match for src">
+	<img src0="fail.jpg" alt="cannot start with 0">
+	<img src010="fail.jpg" alt="cannot start with 0">
+	<img src1a="fail.jpg" alt="The remaining characters of the attribute name must be digits (0-9)">
+	<img src12a4="fail.jpg" alt="The remaining characters of the attribute name must be digits (0-9)">
+	<img srca124="fail.jpg" alt="The remaining characters of the attribute name must be digits (0-9)">
+
+
 	<img src1="(max-width: 400px) pic-small.jpg"
 	     src2="(max-width: 1000px) pic-medium.jpg"
 	     src="pic-large.jpg"
@@ -32,9 +44,4 @@
 	<img src1="100%; pic1.png 160, pic2.png 320, pic3.png 640,
 	                 pic4.png 1280, pic5.png 2560">
 
-	<script>
-	for (var all = document.getElementsByTagName('img'), index = 0, length = all.length; index < length; ++index) {
-		console.log(getImageCandidates(all[index]));
-	}
-	</script>
 </body>
