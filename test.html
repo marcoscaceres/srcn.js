@@ -3,72 +3,55 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="srcn.js"></script>
+<style>
+img[alt="fail"]{
+	font-size: 2em;
+	color: red;
+}
+img[alt="pass"]{
+	font-size: 2em;
+	color: green;
+}
+</style>
 
 <body>
 	<div>
 		<p>The attribute name is at least 4 characters long.</p>
-		<img>
-		<img alt="">
-		<img lowsrc="fail.jpg">
+		<img alt="pass">
 	</div>
 	<div>
 		<p>The first three characters of the attribute name are an ASCII case-insensitive match for "src".</p>
-		<img src>
-		<img src="">
-		<img src="pass.jpg">
-		<img SRC="pass.jpg">
-		<img SrC="pass.jpg">
-		<img src1="pass.jpg">
-		<img SRC2="pass.jpg">
-		<img SrC3="pass.jpg">
+		<img src1="pass.png" alt="fail">
+		<img SRC2="pass.png" alt="fail">
+		<img SrC3="pass.png" alt="fail">
 	</div>
 
 	<div>
-		<p>//The fourth character of the attribute name is a non-zero digit (1-9).</p>
-		<img src0="fail.jpg">
-		<img src01="fail.jpg">
-		<img src1="pass.jpg">
-		<img src9="pass.jpg">
+		<p>The fourth character of the attribute name is a non-zero digit (1-9).</p>
+		<img src0="fail.png"  alt="pass">
+		<img src01="fail.png" alt="pass">
+		<img src1="pass.png" alt="fail">
+		<img src9="pass.png" alt="fail">
+		<img src01="fail.png" src1="pass.png" src001="fail.png" alt="fail">
+		<img srca="fail.png" alt="pass">
+		<img srca="fail.png" src1="pass.png" alt="fail">
 	</div>
 
 	<div>
-		<p>The remaining characters of the attribute name must be digits (0-9).
-		<img src1a="fail.jpg">
-		<img src12a4="fail.jpg">
-		<img srca124="fail.jpg">
-		<img src10="pass.jpg">
-		<img src124="pass.jpg">
-		<img src502023402043024032040234042304232323423241231234231314213243241123="pass.jpg">
-		<img src50202340204302403204023404230423232342324123123423131421324324fail="fail.jpg">
+		<p>The remaining characters of the attribute name must be digits (0-9).</p>
+		<img src1a="fail.png" alt="pass">
+		<img src12a4="fail.png" alt="pass">
+		<img src10="pass.png" alt="fail">
+		<img src124="pass.png" alt="fail">
+		<img src502023402043024032040234042304232323423241231234231314213243241123="pass.png" alt="fail">
+		<img src50202340204302403204023404230423232342324123123423131421324324fail="fail.png" alt="pass">
 	</div>
-
 	<div>
 		<p>The attribute value matches the &lt;srcn-attribute&gt; production.</p>
-		<img src1="fail: fail) fail.jpg">
-		<img src1="(fail: fail) and $#@ fail.jpg">
+		<img src1="fail: fail) fail.png" alt="pass">
+		<img src1="(fail: fail) and $#@ fail.png" alt="pass">
+		<img src1="(fail: fail) and $#@ fail.png" src2="(orientation) pass.png" alt="fail">
+		<img src1="(orientation) pass.png" alt="fail">
+		<img src1="(min-width) pass.png" alt="fail">
 	</div>
-
-	<img src1="(max-width: 400px) pic-small.jpg"
-	     src2="(max-width: 1000px) pic-medium.jpg"
-	     src="pic-large.jpg"
-	     alt="Obama talking to a soldier in hospital scrubs.">
-	
-	<h1>Test 3</h1>
-	<img src1="pic.png, picHigh.png 2x, picLow.png .5x">
-
-	<h1>Test 4</h1>
-	<img src1="100 30em 400 70em 50%;
-	         pic50.png 50, pic100.png 100, pic200.png 200,
-	         pic400.png 400, pic800.png 800, pic1600.png 1600,
-	         pic3200.png 3200">
-	
-	<h1>Test 5</h1>
-	<img src1="(max-width: 30em) pic50.png .5x, pic100.png 1x, pic200.png 2x, pic400.png 4x"
-	     src2="(max-width: 70em) pic200.png .5x, pic400.png 1x, pic800.png 2x, pic1600.png 4x"
-	     src3="pic400.png .5x, pic800.png 1x, pic1600.png 2x, pic3200.png 4x">
-
-	<h1>Test 6</h1>
-	<img src1="100%; pic1.png 160, pic2.png 320, pic3.png 640,
-	                 pic4.png 1280, pic5.png 2560">
-
 </body>
