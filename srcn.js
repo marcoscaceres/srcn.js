@@ -163,16 +163,8 @@
         }
 
         function ImageCandidate(url, resolution) {
-            Object.defineProperty(this, 'url', {
-                get: function () {
-                    return url;
-                }
-            });
-            Object.defineProperty(this, 'resolution', {
-                get: function () {
-                    return resolution;
-                }
-            });
+            this.ulr = url;
+            this.resolution = resolution;
         }
     }
     Object.defineProperty(global, 'getImageCandidates', {
