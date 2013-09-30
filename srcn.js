@@ -21,7 +21,6 @@
 
         //Let candidate attributes be the list of attributes on
         //the element who satisfy the following conditions:
-
         function findCandidates(attrs) {
             var matches = [];
 
@@ -169,6 +168,9 @@
     }
     Object.defineProperty(global, 'getImageCandidates', {
         value: function (element) {
+            if(!element || !(element instanceof global.Element)){
+                throw new TypeError('Expected instance of Element');
+            }
             return obtainCandidates(element);
         }
     });
